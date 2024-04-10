@@ -2,27 +2,26 @@
 
 > **So why is Kerberoasting so interesting :**
 >
->- can be performed from any domain joined machine
->- user needs no special privileges to request a service ticket - ANY user can do this
->- The target system doesn't even need to be available or even exist anymore, if the SPN (service account this exists that's enough)
->- Very hard to spot as this blends in with other service ticket requests
->- Cracking the ticket happens off-line
+>- can be performed from any ***domain joined machine***.
+>- user needs no special privileges to request a service ticket - ***ANY*** user can do this.
+>- The target system doesn't even need to be available or even exist anymore, if the SPN (service account that exists is enough).
+>- Very hard to spot as this blends in with other service ticket requests.
+>- Cracking the ticket happens ***off-line***.
 
 **Here's the gist of it:**
 
-Part of a TGS requested for any SPN is encrypted with the **NTLM hash of that service account’s plaintext password**, any user can request these TGS tickets and then crack hash of the service account offline, without the risk of account lockout!
+Part of a TGS requested for any SPN, is encrypted with the **NTLM hash of that service account’s plaintext password**, any user can request these TGS tickets and then crack hash of the service account offline, without the risk of account lockout!
 
 # HIGH LEVEL OVERVIEW OF KERBEROS
 ---
 
 ![image](./images/00_kerberos1.jpg)
-***Image by SpecterOps (Will Shroeder)***
+<div style="text-align: right"><font size="2">Image by SpecterOps (Will Shroeder)</font></div>
 
 ![image](./images/00_kerberos2.jpg)
-***Image by SpecterOps (Will Shroeder)***
+<div style="text-align: right"><font size="2">Image by SpecterOps (Will Shroeder)</font></div>
 
-
-
+---
 
 >**Kerberoasting mitigations:** The best way to prevent adversaries from cracking kerberos tickets is by using very long and complex passwords. Service Accounts should have a minimum of **25 characters**, make sure to frequently **rotate** the passwords and adhere to the **least privilege** principle when assigning rights to the account (i.e. Don't add the account to Domain Admins just because it's easy). You can also consider using Group Managed Service Accounts (**GSMA**) or another third-party product such as a password vault.
 
