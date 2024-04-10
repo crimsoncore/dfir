@@ -18,6 +18,8 @@ Part of a TGS requested for any SPN, is encrypted with the **NTLM hash of that s
 ![image](./images/00_kerberos1.jpg)
 <div style="text-align: right"><font size="2">Image by SpecterOps (Will Shroeder)</font></div>
 
+---
+
 ![image](./images/00_kerberos2.jpg)
 <div style="text-align: right"><font size="2">Image by SpecterOps (Will Shroeder)</font></div>
 
