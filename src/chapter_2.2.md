@@ -29,7 +29,11 @@ Part of a TGS requested for any SPN, is encrypted with the **NTLM hash of that s
 
 The table below shows you the average time it would take to brute-force a password, keep in mind these numbers only reflect hard brute forcing, so not using password dictionaries or rainbox tables.
 
+---
+
 ![Screenshot](./images/kerberoast_01.jpg)
+
+---
 
 A Few useful **CLI** commands:
 
@@ -43,6 +47,7 @@ A Few useful **CLI** commands:
 |**setspn -T acme -Q \*/\***|*Enumerate all Service Principal Names (SPN), to find service accounts.*|
 |**setspn -A SVC_SQL/dc.acme.local:12345 acme\SVC_sql**|*Create an SPN for an account.*|
 
+---
 
 And the same in **POWERSHELL**:
 
@@ -51,12 +56,29 @@ And the same in **POWERSHELL**:
 |**$secpasswd = ConvertTo-SecureString -String "Password123" -AsPlainText -Force**|*Put the password in a variable.*|
 |**New-ADuser -Name 'SVC_SQL' -GivenName 'SVC' -Surname 'SQL' -DisplayName 'SVC_SQL' -AccountPassword $secpasswd -enabled 1**|*Add a user to the domain, enable the account and set the password.*|
 
+---
+
 So now let's set up our lab environment by creating a kerberoastable account that has a weak password.
+
+First of all open a new command prompt and let's make sure we have domain admin privileges, needed for creating an account in the domain. The ***password*** for DA_student = student.
+
+```
+runas /user:DA_student@acme.local cmd.exe
+```
+
+Now we are running a command prompt under DA_student account.
 
 ```
 net user /add /domain /active:yes SVC_SQL Password123!
 ```
 
+This will create a new user, activates the account and sets the password to "Password123!".
+
+```
+setspn -A SVC_SQL/dc.acme.local:12345 acme\SVC_sql
+```
+
+The setspn -A command will set up the SPN for the service account, in this case for a service on the domain controller (dc.acme.local) on port 12345.
 
 # KERBEROASTING IN ACTION
 ---
