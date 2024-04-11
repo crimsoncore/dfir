@@ -7,3 +7,5 @@
   - [Chapter 2.2 - Kerberoasting](./chapter_2.2.md)
   - [Chapter 2.3 - Spraying](./chapter_2.3.md)
   - [Chapter 2.4 - Relaying](./chapter_2.4.md)
+  - [Chapter 2.5 - Golden Ticket](./chapter_2.5.md)
+  - [Chapter 2.6 - DC Sync](./chapter_2.6.md)
