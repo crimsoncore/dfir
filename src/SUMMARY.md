@@ -9,3 +9,4 @@
   - [Chapter 2.4 - Relaying](./chapter_2.4.md)
   - [Chapter 2.5 - Golden Ticket](./chapter_2.5.md)
   - [Chapter 2.6 - DC Sync](./chapter_2.6.md)
+  - [Chapter 2.7 - Pass the Hash](./chapter_2.7.md)
