@@ -10,3 +10,4 @@
   - [Chapter 2.5 - Golden Ticket](./chapter_2.5.md)
   - [Chapter 2.6 - DC Sync](./chapter_2.6.md)
   - [Chapter 2.7 - Pass the Hash](./chapter_2.7.md)
+  - [Chapter 2.8 - Evil-WinRM](./chapter_2.8.md)
