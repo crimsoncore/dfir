@@ -11,7 +11,8 @@ The presence of WinRM on a machine allows for straightforward remote administrat
 To configure PowerShell for WinRM, Microsoft's Enable-PSRemoting cmdlet comes into play, setting up the computer to accept remote PowerShell commands. With elevated PowerShell access, the following commands can be executed to enable this functionality and designate any host as trusted:
 
 ```
-Enable-PSRemoting -Force  
+Enable-PSRemoting -Force  1
+
 Set-Item wsman:\localhost\client\trustedhosts *  
 ```
 This approach involves adding a wildcard to the trustedhosts configuration, a step that requires cautious consideration due to its implications. It's also noted that altering the network type from "Public" to "Work" might be necessary on the attacker's machine.
