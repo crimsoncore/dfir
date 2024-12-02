@@ -16,7 +16,7 @@ variable "rg_network" {
 }
 variable "vmsize" {
     description = "VM Size for the Production Environment"
-    type = "map"
+    type = map(string)
     default = {
         small = "Standard_DS1_v2"
         medium = "Standard_D2s_v3"
@@ -34,7 +34,7 @@ variable "kali_vmcount" {
 # Azure OS definition variables
 variable "os_ms_server2019" {
     description = "Operating System for Database (MSSQL) on the Production Environment"
-    type = "map"
+    type = map(string)
     default = {
         publisher = "MicrosoftWindowsServer"
         offer = "WindowsServer"
