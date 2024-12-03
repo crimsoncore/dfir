@@ -21,10 +21,10 @@ services:
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /opt/dfir/traefik/dynamic_conf.toml:/dynamic_conf.toml
+      - /opt/docker/traefik/dynamic_conf.toml:/dynamic_conf.toml
     restart: unless-stopped
     networks:
-      - elastic
+      - traefik_default
 networks:
-  elastic:
+  traefik_default:
     driver: bridge

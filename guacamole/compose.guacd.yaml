@@ -1,0 +1,5 @@
+
+guacd:
+    container_name: guacd
+    environment:
+      TOTP_ENABLED: 'false'
