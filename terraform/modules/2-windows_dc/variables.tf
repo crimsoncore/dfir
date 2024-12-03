@@ -37,7 +37,7 @@ variable "active_directory_netbios_name" {
 
 variable "vmsize" {
     description = "VM Size for the Production Environment"
-    type = "map"
+    type = map(string)
     default = {
         small = "Standard_DS1_v2"
         medium = "Standard_D2s_v3"
@@ -52,7 +52,7 @@ variable "private_ip_address" {
 
 variable "os_ms" {
     description = "Operating System for Database (MSSQL) on the Production Environment"
-    type = "map"
+    type = map(string)
     default = {
         publisher = "MicrosoftWindowsServer"
         offer = "WindowsServer"
