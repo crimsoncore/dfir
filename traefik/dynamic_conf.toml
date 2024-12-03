@@ -1,0 +1,12 @@
+[http]
+  [http.routers]
+    [http.routers.portainer]
+      entryPoints = ["web"]
+      service = "portainer"
+      rule = "HostRegexp(`{subdomain:portainer.*}.{subdomain:.*}`)"
+  [http.services]
+    [http.services.portainer]
+      [http.services.portainer.loadBalancer]
+        passHostHeader = true
+        [[http.services.portainer.loadBalancer.servers]]
+          url = "http://10.0.0.6:9000"
