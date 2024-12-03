@@ -1,5 +1,5 @@
 
 guacd:
-    container_name: guacd
+    container_name: guacamole
     environment:
       TOTP_ENABLED: 'false'
