@@ -3,6 +3,7 @@
 - [ **Chapter 1** ](./chapter_1.md)
   - [Chapter 1.1 - Metasploit Basics](./chapter_1.1.md)
   - [Chapter 1.2 - Shellcode](./chapter_1.2.md)
+     - [Chapter 1.2.1 - Functions](./chapter_1.2.1.md)
 - [ **Chapter 2** ](./chapter_2.md)
   - [Chapter 2.1 - Memory](./chapter_2.1.md)
   - [Chapter 2.2 - Kerberoasting](./chapter_2.2.md)
