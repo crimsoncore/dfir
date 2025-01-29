@@ -38,3 +38,13 @@ Change to :
 ```
 Entrypoint -> Specific entrypoint in kernel32.dll basically creating an alias to the function
 Add some options to evade AV -> SetLastError, ExactSpelling
+
+# Base64 Encoding
+
+# XOR Encoding
+
+# Array Reversing
+
+# Syscalls
+
+# Unhooking

@@ -1,7 +1,9 @@
 # Lab 1.3.1 - Strings
 
-Run strings on rubeus
-HxD or XXD on rubeus.exe
+Run strings on NativeDump
+HxD or XXD on NativeDump.exe
+
+LitterBox?
 
 threatcheck on rubeus (make sure defender execption is off for the folder both files are located)
 
