@@ -10,9 +10,9 @@ Mitre: T1003.001 - "OS Credential Dumping: LSASS Memory"
 
 >Credential dumping is the process of obtaining account login and password information, normally in the form of a hash or a clear text password, from the operating system and software. Credentials can then be used to perform Lateral Movement and access restricted information.
 
-![image](./assets/mitre_text_lsass.jpg)
+![image](./images/mitre_text_lsass.jpg)
 
-![image](./assets/mitrelsass.jpg)
+![image](./images/mitrelsass.jpg)
 
 # CredentialGuard
 
@@ -35,9 +35,41 @@ Enabling Credential Guard on `domain controllers` is ***not supported***.
 
 # Mimikatz/SharpKatz
 
+Most heavily signatured binary in the world.
+
 https://github.com/gentilkiwi/
 
 ![Screenshot](./images/mimigit.jpg)
+
+  >**LSASS** [Memory] : The Local Security Authority Subsystem Service (LSASS) handles the enforcement of security policy in a Windows host. In Windows environments from 2000 to Server 2008 the memory of the LSASS process was storing passwords in clear-text to support WDigest and SSP authentication. 
+
+Credentials are stored in LSASS when:
+
+1. a user logs on locally to the system
+2. you use runas and provide credentials
+3. an RDP connection is established
+
+Microsoft from Windows 8.1 and Windows Server 2012 enhanced security by **preventing LSASS from storing passwords in clear-text**. However in a system that has been already compromised with elevated credentials a minor registry modification can instruct LSASS process to store clear-text passwords in its memory in the next login of the user
+
+![WDIGEST](./images/reg_wdigest.jpg)
+
+```code
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest" /v UseLogonCredential /t REG_DWORD /d 00000001 /f
+```
+
+>Don't forget to log out and in again.
+
+![WDIGEST](./images/reg_wdigest_clear.jpg) 
+
+If you now run Mimikatz.exe, you'll see clear-text credentials in memory again. Even on Windows 10 - maybe that's a registry key we want to keep an eye on with Sysmon ;-) ?
+
+![WDIGEST](./images/mimi_clear.jpg) 
+
+
+
+***SHARPKATZ***
+
+.net implementation of Mimikatz.
 
 ![Screenshot](./images/sharpkatzgit.jpg)
 
