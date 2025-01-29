@@ -4,6 +4,16 @@ One of the most common techniques used by adversaries is LSASS dumping, blahblah
 
 Local Security Authority (LSA) is protected subsystem that authenticates and logs users onto the local system. In previous versions of Windows (before Windows 10 and Server 2016), LSA stored secrets used by the operating system in its process memory. As discussed above, when hackers compromise operating system, they can get access to process memory leading to credential theft and lateral theft.
 
+Mitre: T1003.001 - "OS Credential Dumping: LSASS Memory" 
+--
+- source: ***[https://attack.mitre.org/techniques/T1003/](https://attack.mitre.org/techniques/T1003/)***
+
+>Credential dumping is the process of obtaining account login and password information, normally in the form of a hash or a clear text password, from the operating system and software. Credentials can then be used to perform Lateral Movement and access restricted information.
+
+![image](./assets/mitre_text_lsass.jpg)
+
+![image](./assets/mitrelsass.jpg)
+
 # CredentialGuard
 
 Credential guard uses virtualization-based security and creates a new component LSA Isolated to store all secrets that the operating system cannot access directly so that even if hackers compromise the system, they cannot do credential theft. Once Credential guard is configured,  LSA process (LSASS) runs in the operating system, and additional instance of LSA (LSAIso – which stands for LSA Isolated) is created. LSA connects to LSA Isolated using RPC. This is to allow all of the standard calls to LSA to still succeed, offering backwards compatibility for services or applications that require direct communication with LSA.
