@@ -1,11 +1,13 @@
 # Summary
 
 - [ **Chapter 0** ](./chapter_0.md)
-    - [Chapter 0.0 - LSASS Dumping](./chapter_0.0.md)
-    - [Chapter 0.1 - Windows Defender](./defender.md)
-      - [1 - AMSI](./amsi.md)
+    - [Windows Defender](./defender.md)
+      - [Static Analysis](./static.md)
+      - [AMSI](./amsi.md)
+      - [ETW](./etw.md)
+      - [SYSCALLS](./syscalls.md)
 - [ **Chapter 1** ](./chapter_1.md)
-  - [Chapter 0.0 - LSASS Dumping](./chapter_0.0.md)
+  - [LSASS Dumping](./lsassdump.md)
   - [Chapter 1.0 - Havoc C2](./chapter_1.0.md)
   - [Chapter 1.1 - Metasploit Basics](./chapter_1.1.md)
 
@@ -16,7 +18,7 @@
         - [Lab - Basic Loader](./lab1.3.md)
         - [Lab - Remote Loader](./lab1.4.md)
     - [Chapter 1.3 - Evasion](./chapter_1.3.md)
-        - [Lab - Strings](./lab1.3.1.md)
+
 - [ **Chapter 2** ](./chapter_2.md)
   - [Chapter 2.1 - Memory](./chapter_2.1.md)
   - [Chapter 2.2 - Kerberoasting](./chapter_2.2.md)
