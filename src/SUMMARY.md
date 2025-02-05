@@ -2,7 +2,8 @@
 
 - [ **Chapter 0** ](./chapter_0.md)
     - [Chapter 0.0 - LSASS Dumping](./chapter_0.0.md)
-    - [Chapter 0.1 - Windows Defender](./chapter_0.1.md)
+    - [Chapter 0.1 - Windows Defender](./defender.md)
+      - [1 - AMSI](./amsi.md)
 - [ **Chapter 1** ](./chapter_1.md)
   - [Chapter 0.0 - LSASS Dumping](./chapter_0.0.md)
   - [Chapter 1.0 - Havoc C2](./chapter_1.0.md)
