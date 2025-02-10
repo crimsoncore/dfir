@@ -5,6 +5,7 @@
       - [UAC](./uac.md)
       - [Static Analysis](./static.md)
       - [AMSI](./amsi.md)
+      - [Hooks](./hooks.md)
       - [ETW](./etw.md)
       - [SYSCALLS](./syscalls.md)
 - [ **Chapter 1** ](./chapter_1.md)
