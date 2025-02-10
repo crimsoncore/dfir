@@ -2,6 +2,7 @@
 
 - [ **Chapter 0** ](./chapter_0.md)
     - [Windows Defender](./defender.md)
+      - [UAC](./uac.md)
       - [Static Analysis](./static.md)
       - [AMSI](./amsi.md)
       - [ETW](./etw.md)
@@ -18,6 +19,7 @@
         - [Lab - Basic Loader](./lab1.3.md)
         - [Lab - Remote Loader](./lab1.4.md)
     - [Chapter 1.3 - Evasion](./chapter_1.3.md)
+        - [Forensics - Litterbox](./litterbox.md)
 
 - [ **Chapter 2** ](./chapter_2.md)
   - [Chapter 2.1 - Memory](./chapter_2.1.md)
