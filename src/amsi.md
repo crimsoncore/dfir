@@ -149,3 +149,9 @@ https://medium.com/@sam.rothlisberger/amsi-bypass-memory-patch-technique-in-2024
 
 
 And finally AMSI.FAIL
+
+-----
+# dotnet packing
+
+ConfuserEx
+Babel
