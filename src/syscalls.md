@@ -11,7 +11,8 @@ PS C:\git\EDRs> .\hook_finder64.exe C:\windows\system32\ntdll.dll
 https://www.secunnix.com/en/blog/cat-and-mouse-game
 # A. Direct Syscall
 
-In its simplest form, the direct system calls technique can be said to implement the APIs to be used in the malware with assembly commands in the code instead of getting them through ntdll.dll, in order to prevent EDR sensors from hooking (I like to use Turkish terms).
+In its simplest form, the direct system calls technique can be said to implement the APIs to be used in the malware with assembly commands in the code instead of getting them through ntdll.dll, in order to prevent EDR sensors from hooking.
+
 In this way, the program does not refer to ntdll.dll and uses the APIs it needs directly. Since ntdll.dll is not called, the EDR sensors will be blind because they do not inject themselves into the process. There are many PoCs for this technique, For example, Hells Gate, Halo's Gate, Syswhispers2 and 3 are successful studies that prove the application of direct syscall.
 
 
@@ -22,7 +23,8 @@ Unfortunately, this method, which was quite effective at first, can be detected 
 # B. Indirect Syscall
 Indirect system calls are similar to the direct system calls technique in terms of their working logic. But beyond that, they have a few minor differences in the processing of system calls.
 
-In the direct syscall technique, while the process belonging to ntdll.dll is completely outside the event and the RET commands are in the program itself instead of this DLL, in the case of indirect syscall, since the calls are executed through ntdll.dll, they are perceived as normal by EDR processes. Okay. So, if you ask how EDR cannot perform the hook operation, the logic is actually simple. During the execution of the malicious code, the JMP command goes to the block where the system call is located, instead of pointing to the entry point (starting point) of ntdll.dll. Thus, a device unaware of ntdll.dll It is a little more difficult to detect since there is no execution process.
+In the direct syscall technique, while the process belonging to ntdll.dll is completely outside the event and the RET commands are in the program itself instead of this DLL, in the case of indirect syscall, since `the calls are executed through ntdll.dll`, they are perceived as normal by EDR processes. Okay. So, if you ask how EDR cannot perform the hook operation, the logic is actually simple. During the execution of the malicious code, `the JMP command goes to the block where the system call is located`, instead of pointing to the entry point (starting point) of `ntdll.dll`. 
+Thus, a device unaware of ntdll.dll It is a little more difficult to detect since there is no execution process.
 
 ![Screenshot](./images/syscall_indirect.jpg)
 

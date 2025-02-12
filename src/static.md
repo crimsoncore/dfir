@@ -27,11 +27,11 @@ rule PE_Detected
 Run strings on NativeDump
 HxD or XXD on NativeDump.exe
 
-LitterBox?
+LitterBox
 
-threatcheck on rubeus (make sure defender execption is off for the folder both files are located)
+threatcheck/GoCheck on rubeus (make sure defender execption is off for the folder both files are located)
 
-Check output threatcheck
+Check output threatcheck/gocheck
 
 erase with 0x00's
 
