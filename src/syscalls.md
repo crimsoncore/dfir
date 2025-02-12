@@ -1,4 +1,4 @@
-# SYSCALLS
+# SYSCALLS (Kernel mode)
 https://github.com/joshfinley/SyscallDumper
 
 https://passthehashbrowns.github.io/hiding-your-syscalls

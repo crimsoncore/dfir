@@ -1,4 +1,4 @@
-# ETW (Event Tracing for Windows)
+# ETW - Event Tracing for Windows (Kernel mode)
 
 > **TL;DR** ETW basically is  a kernel level debug logging mechanism in Windows - it allows to gather advanced telemetry about functions being called. Windows Even Logs contain a subset of ETW events. Typically used by application developers to debug programs, but has found its way as a telemetry source for EDR's. 
 
