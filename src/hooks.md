@@ -1,5 +1,7 @@
 # Hooks
 
+![Screenshot](./images/hooking.jpg)
+
 HookChecker mr. Un1c0d3r
 
 
@@ -11,4 +13,7 @@ dumpbin.exe /exports file.dll
 
 
 Screenshot IDA JUMP
+
+https://github.com/Almorabea/HookSweeper
+
 

@@ -120,3 +120,6 @@ PID                 Image
 0x00000000
 
 -----
+
+https://github.com/Lsecqt-Sponsors/Haunt_Agent/blob/main/Payload_Type/haunt/haunt/agent_code/etw.ps1
+https://github.com/MHaggis/PowerShell-Hunter
