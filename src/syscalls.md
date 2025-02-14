@@ -32,3 +32,4 @@ Although both techniques still work, the indirect syscall method can help develo
 In addition, the Event Tracing for Windows (ETW) structure offered by Microsoft for Windows systems can be used by some EDRs to control the stack structures where calls are made. If you want to see a very clean implementation of both techniques, read the article below. We can recommend it.
 
 https://redops.at/en/blog/direct-syscalls-vs-indirect-syscalls
+https://github.com/Maldev-Academy/HellHall
