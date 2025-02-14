@@ -111,7 +111,18 @@ Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 ```
 Let's add an HTTPs listener, click on `Add` and enter the listener configuration. Give the listener a name, select `Https` and past the user agent in the correct field. Click on `Save`
 
-> Make sure you select the correct IP addres (host)for your machine!
+> Make sure you select the correct IP addres (host) for your machine! You can double check by running ifconfig.
+
+![Screenshot](./images/ifconfig.jpg)
 
 ![Screenshot](./images/havoc_addlistener.jpg)
 
+![Screenshot](./images/havoc_payload.jpg)
+
+![Screenshot](./images/havoc_updog)
+
+![Screenshot](./images/havoc_demon.jpg)
+
+![Screenshot](./images/havoc_session.jpg)
+
+![Screenshot](./images/havoc_session2.jpg)
