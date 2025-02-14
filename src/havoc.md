@@ -1,6 +1,6 @@
 # Havoc C2
 
-With a phletora of attack frameworks available (https://howto.thec2matrix.com), the most important requirement is *malleability/customizability*. Commonly known frameworks such as `metasploit`, `cobalt strike`, `Empire` and `sliver` come to mind. In this training we'll be using a rather new, cobalt strike like framework called `Havoc C2`.
+With a phletora of attack frameworks available (https://howto.thec2matrix.com), the most important requirement is *malleability/customizability*. Commonly known frameworks such as `metasploit`, `cobalt strike`, `Empire` (Sartkiller GUI), `Mythic C2` and `sliver` come to mind. In this training we'll be using a rather new, cobalt strike like framework called `Havoc C2`.
 
 Attack frameworks typically all consist of the following 3 elements
 
@@ -17,23 +17,93 @@ Havoc C2 is the framework we will be using in this training, however the techniq
 
 ![Screenshot](./images/havoc.jpg)
 
-> https://github.com/HavocFramework/Havoc?tab=readme-ov-file
+> <https://github.com/HavocFramework/Havoc?tab=readme-ov-file>
 > 
-> On Kali we can simply install Havoc C2 with the following command
+> On Kali we can simply install Havoc C2 with the following command (this is already done)
 > 
-```code
+```bash
 apt install havoc
 ```
 
-Running the teamserver (Profiles)
+# Creating a custom profile
+Let's have a look at the custom profile we have created for this team server. The profile will have the general settings such as users that can log in to the team server, user agents for HTTP/HTTPs listeners, and how our implants will behave.
 
-```code
+> ***OPSEC HINT*** : Always customize your profiles as default profiles are almost often finger printed by AV/EDR.
+
+```bash
+sudo nano /opt/Havoc/profiles/custom.yaotl
+```
+
+This is the content of the custom profile:
+
+```yaml
+Teamserver {
+    Host = "10.0.0.4"
+    Port = 40056
+
+    Build {
+        Compiler64 = "/usr/bin/x86_64-w64-mingw32-gcc"
+        Nasm = "/usr/bin/nasm"
+    }
+}
+
+Operators {
+    user "Threatadmin" {
+        Password = "Threathunt25"
+    }
+}
+
+# demon setting.
+
+Demon {
+    Sleep = 2
+    Jitter = 20
+
+    TrustXForwardedFor = false
+
+    Injection {
+        Spawn64 = "C:\\Windows\\System32\\Werfault.exe"
+    }
+
+    Binary {
+        ReplaceStrings-x64 = {
+            "demon.x64.dll": "",
+            "This program cannot be run in DOS mode.": "",
+        }
+    }
+}
+```
+
+# Running the teamserver
+
+![Screenshot](./images/havoc_team.jpg)
+```bash
 havoc server --profile /opt/Havoc/profiles/custom.yoatl
 ```
 
-Running the client
+# Running the client
+
+![Screenshot](./images/havoc_newtab.jpg)
+
+In your terminal open a new tab, then run the following command:
+
 
 ```code
 havoc client
 ```
+We can now log in to our teamserver using the user `Threatadmin` and the password whcih we defined in the custom Havoc C2 profile.
+
+![Screenshot](./images/havoc_login.jpg)
+
+Let's start by setting up a listener:
+
+<https://havocframework.com/docs/profiles>
+
+In the Havoc GUI to to `view` and select listeners.
+
+![Screenshot](./images/havoc_viewlistener.jpg)
+
+> ***OPSEC HINT*** : Always customize your listeners by using valid user agents, also by using HTTPs we make sure our connections are harder to inspect.
+
+Let's add an HTTPs listener, click on `Add` and enter the listener configuration.
 
