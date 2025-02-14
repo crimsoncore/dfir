@@ -10,7 +10,7 @@
       - [SYSCALLS](./syscalls.md)
 - [ **Chapter 1** ](./chapter_1.md)
   - [LSASS Dumping](./lsassdump.md)
-  - [Chapter 1.0 - Havoc C2](./chapter_1.0.md)
+  - [Chapter 1.0 - Havoc C2](./havoc.md)
   - [Chapter 1.1 - Metasploit Basics](./chapter_1.1.md)
 
   - [Chapter 1.2 - Shellcode](./chapter_1.2.md)
