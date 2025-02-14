@@ -103,7 +103,15 @@ In the Havoc GUI to to `view` and select listeners.
 
 ![Screenshot](./images/havoc_viewlistener.jpg)
 
-> ***OPSEC HINT*** : Always customize your listeners by using valid user agents, also by using HTTPs we make sure our connections are harder to inspect.
+> ***OPSEC HINT*** : Always customize your listeners by using valid user agents, also by using HTTPs we make sure our connections are harder to inspect. This is a nice website to generate user agents strings: <https://useragents.io/parse/my-user-agent>
 
-Let's add an HTTPs listener, click on `Add` and enter the listener configuration.
+Here's a regular chrome user agent from your windows machine:
+```yaml
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+```
+Let's add an HTTPs listener, click on `Add` and enter the listener configuration. Give the listener a name, select `Https` and past the user agent in the correct field. Click on `Save`
+
+> Make sure you select the correct IP addres (host)for your machine!
+
+![Screenshot](./images/havoc_addlistener.jpg)
 
